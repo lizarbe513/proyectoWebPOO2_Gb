@@ -12,7 +12,7 @@
 	%>
 	<h3>Nuevo Autor</h3>
 	<form role="form" action="<%=url %>AutoresController" method="POST">
-	<input type="hidden" name="op" value="insertar">
+		<input type="hidden" name="op" value="insertar">
 		Nombre del Autor: <input type="text" name="nombre" id="insertar"/><br>
 		Nacionalidad : <input type="text" name="nacionalidad" id="insertar"/><br>
 		
