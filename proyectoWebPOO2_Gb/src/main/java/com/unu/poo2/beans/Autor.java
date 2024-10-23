@@ -5,6 +5,10 @@ public class Autor {
 	private String nacionalidad;
 	private String nombreAutor;
 	
+	public Autor() {
+		super();
+	}
+
 	public Autor(int codigoAutor, String nacionalidad, String nombreAutor) {
 		this.codigoAutor = codigoAutor;
 		this.nacionalidad = nacionalidad;

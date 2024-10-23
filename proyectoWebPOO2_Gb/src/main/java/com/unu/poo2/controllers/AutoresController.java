@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,7 +24,7 @@ public class AutoresController extends HttpServlet {
         super();
     }
 
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
 
 		if (request.getParameter("op") == null) {
 			listar (request, response);
@@ -37,24 +38,23 @@ public class AutoresController extends HttpServlet {
 			break;
 
 		case "nuevo":
-			listar (request, response);
+			request.getRequestDispatcher("/Autores/nuevoAutor.jsp").forward(request, response);
 			break;
 
 		}
 
 	}
 	
-	private void listar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void listar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException {
 		try {
-			request.setAttribute("listaAutores", modelo.listarAutores());
+			request.setAttribute("listarAutores", modelo.listarAutores());
 			
 			Iterator<Autor> it = modelo.listarAutores().iterator();
 			while(it.hasNext()) {
 				Autor a = it.next();
-				System.out.println("Este es una prueba");
 				System.out.println(a.getCodigoAutor()+" "+a.getNombreAutor()+" "+a.getNacionalidad());
 			}
-			request.getRequestDispatcher("/autores/listaAutores.jsp").forward(request, response);
+			request.getRequestDispatcher("/Autores/listarAutores.jsp").forward(request, response);
 			
 		} catch (ServletException | IOException ex) {
 			Logger.getLogger(AutoresController.class.getName()).log(Level.SEVERE, null, ex);
@@ -63,11 +63,21 @@ public class AutoresController extends HttpServlet {
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		processRequest(request, response);
+		try {
+			processRequest(request, response);
+		} catch (ServletException | IOException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		processRequest(request, response);
+		try {
+			processRequest(request, response);
+		} catch (ServletException | IOException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
